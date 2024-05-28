@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://b3f1npmp7gy4a"]
+
+[ext_resource type="Script" path="res://Scripts/marble.gd" id="1_uikhd"]
+[ext_resource type="Texture2D" uid="uid://qdmhgdydsv3j" path="res://icon.svg" id="2_ht0lw"]
+[ext_resource type="Script" path="res://Scripts/state_machine.gd" id="2_lhgy7"]
+[ext_resource type="Script" path="res://Scripts/States/marble_flying_state.gd" id="3_n25m1"]
+[ext_resource type="Script" path="res://Scripts/States/marble_train_state.gd" id="4_wgmha"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rw55j"]
+radius = 64.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_86ana"]
+radius = 88.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1ghvu"]
+radius = 64.0
+
+[node name="Marble" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "collider", "detector")]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_uikhd")
+state_machine = NodePath("StateMachine")
+collider = NodePath("Marble Collider")
+detector = NodePath("Marble Detector")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_rw55j")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_lhgy7")
+
+[node name="MarbleFlyingState" type="Node" parent="StateMachine" node_paths=PackedStringArray("train_state")]
+script = ExtResource("3_n25m1")
+train_state = NodePath("../MarbleTrainState")
+
+[node name="MarbleTrainState" type="Node" parent="StateMachine"]
+script = ExtResource("4_wgmha")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ht0lw")
+
+[node name="Marble Detector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Marble Detector"]
+shape = SubResource("CircleShape2D_86ana")
+
+[node name="Marble Collider" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Marble Collider"]
+shape = SubResource("CircleShape2D_1ghvu")
+
+[connection signal="body_entered" from="Marble Detector" to="." method="_on_marble_detector_body_entered"]
+[connection signal="body_exited" from="Marble Detector" to="." method="_on_marble_detector_body_exited"]
+[connection signal="body_entered" from="Marble Collider" to="." method="_on_marble_collider_body_entered"]

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://h32bvfq0ak3k"]
+
+[ext_resource type="PackedScene" uid="uid://b3f1npmp7gy4a" path="res://Scenes/marble_basic.tscn" id="1_subtl"]
+[ext_resource type="Script" path="res://Scenes/marble_basic_test.gd" id="2_o6882"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Marble" parent="." instance=ExtResource("1_subtl")]
+position = Vector2(200, -21)
+script = ExtResource("2_o6882")
+
+[node name="Marble2" parent="." instance=ExtResource("1_subtl")]
+position = Vector2(123, 202)
+
+[node name="Marble3" parent="." instance=ExtResource("1_subtl")]
+position = Vector2(275, 202)

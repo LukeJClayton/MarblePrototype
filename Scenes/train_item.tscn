@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://cy5t36y86r2g7"]
+
+[node name="TrainItem" type="PathFollow2D"]
