@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkky0xmj2p4kb"]
+
+[ext_resource type="Script" path="res://Scripts/Shooter/shooter.gd" id="1_iypva"]
+[ext_resource type="Texture2D" uid="uid://qdmhgdydsv3j" path="res://icon.svg" id="1_xecmc"]
+
+[node name="Shooter" type="Node2D" node_paths=PackedStringArray("chamber", "magazine")]
+rotation = 1.5708
+script = ExtResource("1_iypva")
+chamber = NodePath("Pivot/Chamber")
+magazine = NodePath("Magazine")
+
+[node name="Pivot" type="Node2D" parent="."]
+rotation = 1.5708
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot"]
+scale = Vector2(2, 2)
+texture = ExtResource("1_xecmc")
+
+[node name="Direction" type="RayCast2D" parent="Pivot"]
+target_position = Vector2(128, 0)
+
+[node name="Chamber" type="Node2D" parent="Pivot"]
+
+[node name="Magazine" type="Node" parent="."]

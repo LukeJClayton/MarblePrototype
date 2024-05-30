@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3f1npmp7gy4a"]
+[gd_scene load_steps=11 format=3 uid="uid://b3f1npmp7gy4a"]
 
-[ext_resource type="Script" path="res://Scripts/marble.gd" id="1_uikhd"]
+[ext_resource type="Script" path="res://Scripts/Marbles/marble.gd" id="1_yxj3s"]
 [ext_resource type="Texture2D" uid="uid://qdmhgdydsv3j" path="res://icon.svg" id="2_ht0lw"]
-[ext_resource type="Script" path="res://Scripts/state_machine.gd" id="2_lhgy7"]
+[ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="3_by0ah"]
 [ext_resource type="Script" path="res://Scripts/States/marble_flying_state.gd" id="3_n25m1"]
+[ext_resource type="Script" path="res://Scripts/States/marble_default_state.gd" id="4_7lnpl"]
 [ext_resource type="Script" path="res://Scripts/States/marble_train_state.gd" id="4_wgmha"]
+[ext_resource type="Script" path="res://Scripts/States/marble_chambered_state.gd" id="5_fwdch"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rw55j"]
 radius = 64.0
@@ -18,7 +20,7 @@ radius = 64.0
 [node name="Marble" type="CharacterBody2D" node_paths=PackedStringArray("marble", "state_machine", "collider", "detector")]
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("1_uikhd")
+script = ExtResource("1_yxj3s")
 marble = NodePath(".")
 state_machine = NodePath("StateMachine")
 collider = NodePath("Marble Collider")
@@ -31,17 +33,32 @@ texture = ExtResource("2_ht0lw")
 shape = SubResource("CircleShape2D_rw55j")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("entity")]
-script = ExtResource("2_lhgy7")
+script = ExtResource("3_by0ah")
 entity = NodePath("..")
+
+[node name="MarbleDefaultState" type="Node" parent="StateMachine" node_paths=PackedStringArray("train_state", "chambered_state", "entity")]
+script = ExtResource("4_7lnpl")
+train_state = NodePath("../MarbleTrainState")
+chambered_state = NodePath("../MarbleChamberedState")
+entity = NodePath("../..")
+autostart = null
+
+[node name="MarbleChamberedState" type="Node" parent="StateMachine" node_paths=PackedStringArray("flying_state", "entity")]
+script = ExtResource("5_fwdch")
+flying_state = NodePath("../MarbleFlyingState")
+entity = NodePath("../..")
+autostart = null
 
 [node name="MarbleFlyingState" type="Node" parent="StateMachine" node_paths=PackedStringArray("train_state", "entity")]
 script = ExtResource("3_n25m1")
 train_state = NodePath("../MarbleTrainState")
 entity = NodePath("../..")
+autostart = null
 
 [node name="MarbleTrainState" type="Node" parent="StateMachine" node_paths=PackedStringArray("entity")]
 script = ExtResource("4_wgmha")
 entity = NodePath("../..")
+autostart = null
 
 [node name="Marble Detector" type="Area2D" parent="."]
 collision_layer = 0

@@ -1,10 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://h32bvfq0ak3k"]
 
-[ext_resource type="PackedScene" uid="uid://b3f1npmp7gy4a" path="res://Scenes/marble_basic.tscn" id="1_subtl"]
-[ext_resource type="Script" path="res://Scenes/marble_basic_test.gd" id="2_o6882"]
-[ext_resource type="Script" path="res://Scenes/train_item.gd" id="3_0dqwt"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qdw57"]
+[ext_resource type="Script" path="res://Scripts/level.gd" id="1_llm38"]
+[ext_resource type="PackedScene" uid="uid://b3f1npmp7gy4a" path="res://Scenes/Marbles/marble_basic.tscn" id="1_subtl"]
+[ext_resource type="PackedScene" uid="uid://cy5t36y86r2g7" path="res://Scenes/Marbles/train_item.tscn" id="2_py3ya"]
+[ext_resource type="PackedScene" uid="uid://dkky0xmj2p4kb" path="res://Scenes/Shooter/shooter.tscn" id="3_aoceg"]
 
 [sub_resource type="Curve2D" id="Curve2D_s8nxf"]
 _data = {
@@ -12,92 +11,51 @@ _data = {
 }
 point_count = 13
 
-[node name="Main" type="Node2D"]
-
-[node name="Marble" parent="." instance=ExtResource("1_subtl")]
-position = Vector2(578, 350)
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(398, 18)
-script = ExtResource("2_o6882")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("CapsuleShape2D_qdw57")
-disabled = true
+[node name="Main" type="Node2D" node_paths=PackedStringArray("shooter", "chamber")]
+script = ExtResource("1_llm38")
+shooter = NodePath("Shooter")
+chamber = NodePath("Chamber")
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_s8nxf")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+[node name="TrainItem" parent="Path2D" instance=ExtResource("2_py3ya")]
 position = Vector2(263, 146)
-rotates = false
-loop = false
-script = ExtResource("3_0dqwt")
 
-[node name="Marble2" parent="Path2D/PathFollow2D" instance=ExtResource("1_subtl")]
+[node name="Marble" parent="Path2D/TrainItem" instance=ExtResource("1_subtl")]
 train_spawned = true
 
-[node name="PathFollow2D2" type="PathFollow2D" parent="Path2D"]
+[node name="TrainItem2" parent="Path2D" instance=ExtResource("2_py3ya")]
 position = Vector2(263, 146)
-rotates = false
-loop = false
-script = ExtResource("3_0dqwt")
 
-[node name="Marble2" parent="Path2D/PathFollow2D2" node_paths=PackedStringArray("marble", "state_machine", "collider", "detector") instance=ExtResource("1_subtl")]
-marble = NodePath("../../PathFollow2D/Marble2")
-state_machine = NodePath("../../PathFollow2D/Marble2/StateMachine")
-collider = NodePath("../../PathFollow2D/Marble2/Marble Collider")
-detector = NodePath("../../PathFollow2D/Marble2/Marble Detector")
+[node name="Marble" parent="Path2D/TrainItem2" node_paths=PackedStringArray("marble", "state_machine", "collider", "detector") instance=ExtResource("1_subtl")]
+marble = NodePath("../../TrainItem/Marble")
+state_machine = NodePath("../../TrainItem/Marble/StateMachine")
+collider = NodePath("../../TrainItem/Marble/Marble Collider")
+detector = NodePath("../../TrainItem/Marble/Marble Detector")
 train_spawned = true
 
-[node name="PathFollow2D3" type="PathFollow2D" parent="Path2D"]
+[node name="TrainItem3" parent="Path2D" instance=ExtResource("2_py3ya")]
 position = Vector2(263, 146)
-rotates = false
-loop = false
-script = ExtResource("3_0dqwt")
 
-[node name="Marble2" parent="Path2D/PathFollow2D3" node_paths=PackedStringArray("marble", "state_machine", "collider", "detector") instance=ExtResource("1_subtl")]
-marble = NodePath("../../PathFollow2D/Marble2")
-state_machine = NodePath("../../PathFollow2D/Marble2/StateMachine")
-collider = NodePath("../../PathFollow2D/Marble2/Marble Collider")
-detector = NodePath("../../PathFollow2D/Marble2/Marble Detector")
+[node name="Marble" parent="Path2D/TrainItem3" node_paths=PackedStringArray("marble", "state_machine", "collider", "detector") instance=ExtResource("1_subtl")]
+marble = NodePath("../../TrainItem/Marble")
+state_machine = NodePath("../../TrainItem/Marble/StateMachine")
+collider = NodePath("../../TrainItem/Marble/Marble Collider")
+detector = NodePath("../../TrainItem/Marble/Marble Detector")
 train_spawned = true
 
-[node name="PathFollow2D4" type="PathFollow2D" parent="Path2D"]
+[node name="TrainItem4" parent="Path2D" instance=ExtResource("2_py3ya")]
 position = Vector2(263, 146)
-rotates = false
-loop = false
-script = ExtResource("3_0dqwt")
 
-[node name="Marble2" parent="Path2D/PathFollow2D4" node_paths=PackedStringArray("marble", "state_machine", "collider", "detector") instance=ExtResource("1_subtl")]
-marble = NodePath("../../PathFollow2D/Marble2")
-state_machine = NodePath("../../PathFollow2D/Marble2/StateMachine")
-collider = NodePath("../../PathFollow2D/Marble2/Marble Collider")
-detector = NodePath("../../PathFollow2D/Marble2/Marble Detector")
+[node name="Marble" parent="Path2D/TrainItem4" node_paths=PackedStringArray("marble", "state_machine", "collider", "detector") instance=ExtResource("1_subtl")]
+marble = NodePath("../../TrainItem/Marble")
+state_machine = NodePath("../../TrainItem/Marble/StateMachine")
+collider = NodePath("../../TrainItem/Marble/Marble Collider")
+detector = NodePath("../../TrainItem/Marble/Marble Detector")
 train_spawned = true
 
-[node name="PathFollow2D5" type="PathFollow2D" parent="Path2D"]
-position = Vector2(263, 146)
-rotates = false
-loop = false
-script = ExtResource("3_0dqwt")
+[node name="Shooter" parent="." instance=ExtResource("3_aoceg")]
+position = Vector2(584, 294)
 
-[node name="Marble2" parent="Path2D/PathFollow2D5" node_paths=PackedStringArray("marble", "state_machine", "collider", "detector") instance=ExtResource("1_subtl")]
-marble = NodePath("../../PathFollow2D/Marble2")
-state_machine = NodePath("../../PathFollow2D/Marble2/StateMachine")
-collider = NodePath("../../PathFollow2D/Marble2/Marble Collider")
-detector = NodePath("../../PathFollow2D/Marble2/Marble Detector")
-train_spawned = true
-
-[node name="PathFollow2D6" type="PathFollow2D" parent="Path2D"]
-position = Vector2(263, 146)
-rotates = false
-loop = false
-script = ExtResource("3_0dqwt")
-
-[node name="Marble2" parent="Path2D/PathFollow2D6" node_paths=PackedStringArray("marble", "state_machine", "collider", "detector") instance=ExtResource("1_subtl")]
-marble = NodePath("../../PathFollow2D/Marble2")
-state_machine = NodePath("../../PathFollow2D/Marble2/StateMachine")
-collider = NodePath("../../PathFollow2D/Marble2/Marble Collider")
-detector = NodePath("../../PathFollow2D/Marble2/Marble Detector")
-train_spawned = true
+[node name="Chamber" type="Node" parent="."]

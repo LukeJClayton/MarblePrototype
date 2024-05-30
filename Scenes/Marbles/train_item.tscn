@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy5t36y86r2g7"]
+
+[ext_resource type="Script" path="res://Scripts/Marbles/train_item.gd" id="1_vh1ef"]
+
+[node name="TrainItem" type="PathFollow2D"]
+rotates = false
+loop = false
+script = ExtResource("1_vh1ef")
